@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgba(255, 105, 180, 0.453);
+        }
+
+        nav {
+            width: 400px;
+            min-height: 100vh;
+            background-color: rgb(42, 41, 41);
+            padding-top: 100px;
+            position: relative;
+            transition: 1s;
+            overflow-x: hidden;
+            overflow-y: scroll;
+
+            >span {
+                cursor: pointer;
+                font-size: 30px;
+                position: absolute;
+                top: 50px;
+                right: 0px;
+                transition: 1s;
+            }
+
+            >ul {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                transition: 1s;
+
+                >li {
+                    list-style-type: none;
+                    width: 400px;
+                    min-height: 70px;
+                    border: 1px solid hotpink;
+                    display: flex;
+                    flex-wrap: wrap;
+                    position: relative;
+
+                    >* {
+                        display: flex;
+                        /* border: 1px solid red; */
+                        color: white;
+                        font-size: 20px;
+
+
+                    }
+
+                    >span {
+                        width: 100px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 70px;
+                        left: 0;
+                        position: absolute;
+                        top: 0;
+                    }
+
+                    >h2 {
+                        width: 300px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 70px;
+                        left: 100px;
+                        position: absolute;
+                        top: 0;
+                    }
+
+                    >ul {
+                        width: 100%;
+                        flex-wrap: wrap;
+                        overflow: hidden;
+                        transition: 1s;
+                        margin-top: 70px;
+
+                        >li {
+                            list-style-type: none;
+                            width: 100%;
+                            height: 40px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background-color: hotpink;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        .w {
+            width: 100px !important;
+        }
+
+        .rotate {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <span>⬅️</span>
+        <ul>
+            <li>
+                <span>🌞</span>
+                <h2>Lorem, ipsum dolor.</h2>
+                <ul>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                </ul>
+            </li>
+
+            <li>
+                <span>💗</span>
+                <h2>Lorem, ipsum dolor.</h2>
+                <ul>
+                    <li>subMenu</li>
+
+                </ul>
+            </li>
+
+            <li>
+                <span>🍃</span>
+                <h2>Lorem, ipsum dolor.</h2>
+                <ul>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+
+                </ul>
+            </li>
+
+            <li>
+                <span>📸</span>
+                <h2>Lorem, ipsum dolor.</h2>
+                <ul>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                </ul>
+            </li>
+
+            <li>
+                <span>🎁</span>
+                <h2>Lorem, ipsum dolor.</h2>
+                <ul>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+
+                </ul>
+            </li>
+
+            <li>
+                <span>🎗️</span>
+                <h2>Lorem, ipsum dolor.</h2>
+                <ul>
+
+
+                </ul>
+            </li>
+
+            <li>
+                <span>🛒</span>
+                <h2>Lorem, ipsum dolor.</h2>
+                <ul>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                    <li>subMenu</li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+</body>
+<script>
+    const toggleMenu = document.querySelector('nav>span')
+    const nav = document.querySelector('nav')
+    const subMenu = document.querySelectorAll('nav>ul>li>ul')
+    const li = document.querySelectorAll('nav>ul>li')
+
+
+    let mod2 = 1
+    toggleMenu.addEventListener('click', (e) => {
+        nav.classList.toggle('w')
+        e.target.classList.toggle('rotate')
+        // toggleMenu.classList.toggle('rotate')
+        if (mod2 % 2) {
+            subMenu.forEach((item) => {
+                item.style.height = '0'
+            })
+        }
+        mod2++
+    })
+
+    //calculate height of submenu and set h=0
+    subMenu.forEach((val) => {
+        val.setAttribute('data-h', val.clientHeight)
+        val.style.height = '0'
+    })
+
+    ///children[2] = ul inside of li
+    li.forEach((val, i) => {
+        val.addEventListener('click', () => {
+            console.log(val.children[2])
+            if (val.children[2] != undefined) {
+
+                //reset submenu:
+                subMenu.forEach((item, index) => {
+                    if (index != i) {
+                        item.style.height = '0'
+                    } else {
+                        let myheight = val.children[2].clientHeight
+                        if (myheight == 0) {
+                            val.children[2].style.height = val.children[2].getAttribute('data-h') + 'px'
+                        } else {
+                            val.children[2].style.height = '0'
+                        }
+                    }
+                })
+
+
+
+
+
+                // val.children[2].style.height = val.children[2].getAttribute('data-h') + 'px'
+            }
+
+        })
+    })
+</script>
+
+</html>
